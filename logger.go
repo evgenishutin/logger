@@ -14,6 +14,7 @@ type NotificatorInterface interface {
 type LoggerInterface interface {
 	MapFields(fields map[string]interface{}) logrus.Fields
 	WrapperNotifyError(msg map[string]interface{}) logrus.Fields
+	WithFields(fields logrus.Fields) *logrus.Entry
 }
 
 type Log struct {
@@ -61,6 +62,10 @@ func (l *Log) MapFields(fields map[string]interface{}) logrus.Fields {
 	}
 
 	return log
+}
+
+func (l *Log) WithFields(fields logrus.Fields) *logrus.Entry {
+	return l.Logger.WithFields(fields)
 }
 
 func (l *Log) WrapperNotifyError(msg map[string]interface{}) logrus.Fields {
